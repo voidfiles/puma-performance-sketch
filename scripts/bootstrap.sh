@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get upgrade
+apt-get upgrade -y
 apt-get install -y git build-essential
 
 mkdir -p $HOME/projects
