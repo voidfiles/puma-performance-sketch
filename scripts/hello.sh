@@ -2,6 +2,8 @@
 
 # Mostly a copy of the puma hello benchmark
 # https://github.com/puma/puma/blob/master/benchmarks/wrk/hello.sh
+cd ../app;
+
 bundle exec puma -t 4 hello.ru &
 PID1=$!
 sleep 5
