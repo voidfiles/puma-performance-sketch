@@ -29,3 +29,6 @@ test:
 
 benchmark:
 	./scripts/hello.sh
+
+ssh:
+	@echo "ssh root@$(APP_HOST)"
