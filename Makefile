@@ -11,7 +11,8 @@ else
 endif
 
 bootstrap:
-	ssh root@$(APP_HOST) 'bash -s' < ./scripts/bootstrap.sh
+#	ssh root@$(APP_HOST) 'bash -s' < ./scripts/bootstrap.sh
+	ssh root@$(BENCHMARK_HOST) 'bash -s' < ./scripts/bootstrap.sh
 
 provision:
 	./scripts/provision.sh
@@ -32,4 +33,4 @@ benchmark:
 
 ssh:
 	@echo "app_host: ssh root@$(APP_HOST)"
-	@echo "app_host: ssh root@$(BENCHMARK_HOST)"
+	@echo "benchmark: ssh root@$(BENCHMARK_HOST)"
