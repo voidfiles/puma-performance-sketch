@@ -31,3 +31,7 @@ benchmark:
 ssh:
 	@echo "app_host: ssh root@$(APP_HOST)"
 	@echo "benchmark: ssh root@$(BENCHMARK_HOST)"
+
+update:
+	ssh root@$(APP_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only'
+	ssh root@$(BENCHMARK_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only'
