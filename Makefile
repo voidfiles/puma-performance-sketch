@@ -11,8 +11,8 @@ else
 endif
 
 bootstrap:
-	ssh root@$(APP_HOST) 'bash -s' < ./scripts/bootstrap.sh
-	ssh root@$(BENCHMARK_HOST) 'bash -s' < ./scripts/bootstrap.sh
+	ssh root@$(APP_HOST) 'DD_API_KEY=$(DD_API_KEY) bash -s' < ./scripts/bootstrap.sh
+	ssh root@$(BENCHMARK_HOST) 'DD_API_KEY=$(DD_API_KEY) bash -s' < ./scripts/bootstrap.sh
 
 provision:
 	./scripts/provision.sh
