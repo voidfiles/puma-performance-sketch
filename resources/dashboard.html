@@ -9,16 +9,39 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-    <div data-netdata="statsd_counter_hello.rack.request.count"
-        data-width="100%"
-        data-height="180px"
-        data-before="0" data-after="-480"
+    <div>
+        <div data-netdata="statsd_counter_hello.rack.request.count"
+            data-width="100%"
+            data-height="180px"
+            data-before="0" data-after="-480"
+            ></div>
+    </div>
+    <div style="width: 100%;">
+        <div data-netdata="statsd_timer_hello.rack.request.duration"
+            data-width="25%"
+            data-height="180px"
+            data-dimensions="min"
+            data-before="0" data-after="-480"
         ></div>
-    <div data-netdata="statsd_timer_hello.rack.request.duration"
-        data-width="100%"
-        data-height="180px"
-        data-before="0" data-after="-480"
+        <div data-netdata="statsd_timer_hello.rack.request.duration"
+            data-width="25%"
+            data-height="180px"
+            data-dimensions="median"
+            data-before="0" data-after="-480"
         ></div>
+        <div data-netdata="statsd_timer_hello.rack.request.duration"
+            data-width="25%"
+            data-height="180px"
+            data-dimensions="95%"
+            data-before="0" data-after="-480"
+        ></div>
+        <div data-netdata="statsd_timer_hello.rack.request.duration"
+            data-width="25%"
+            data-height="180px"
+            data-dimensions="max"
+            data-before="0" data-after="-480"
+        ></div>
+    </div>
     <div data-netdata="system.cpu"
         data-width="100%"
         data-height="180px"
