@@ -9,4 +9,5 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gem "rack", "~> 2.2"
 gem "puma", "~> 5.3"
 
-gem "statsd-ruby", "~> 1.5"
+
+gem "statsd-instrument", "~> 3.1"
