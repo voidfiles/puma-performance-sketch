@@ -8,7 +8,7 @@ mkdir -p $HOME/projects
 
 cd $HOME/projects
 
-git clone https://github.com/voidfiles/puma-performance-sketch.git
+[![ -d $HOME/projects/puma-performance-sketch ]] &&  git clone https://github.com/voidfiles/puma-performance-sketch.git
 
 cd $HOME/projects/puma-performance-sketch
 
