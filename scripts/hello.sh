@@ -7,7 +7,7 @@ cd app;
 bundle exec puma -t 4 hello.ru &
 PID1=$!
 sleep 5
-wrk -c 8 -d 120 --latency http://localhost:9292
+wrk -c 4 -d 30 --latency http://localhost:9292
 
 # echo "GET http://localhost:9292" | vegeta -cpus=2 attack -rate=100/1s -max-workers=100000 -duration=30s -timeout=1s | tee results.bin | vegeta report
 # vegeta report -type=json results.bin > metrics.json

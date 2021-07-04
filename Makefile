@@ -18,9 +18,6 @@ provision:
 	./scripts/provision.sh
 
 setup:
-ifdef $(foo)
-	apt-get install ruby ruby-dev go ruby-bundle
-endif 
 	cd app && bundle
 	go get -u github.com/tsenart/vegeta
 
