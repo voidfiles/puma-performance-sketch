@@ -11,7 +11,7 @@ else
 endif
 
 bootstrap:
-#	ssh root@$(APP_HOST) 'bash -s' < ./scripts/bootstrap.sh
+	ssh root@$(APP_HOST) 'bash -s' < ./scripts/bootstrap.sh
 	ssh root@$(BENCHMARK_HOST) 'bash -s' < ./scripts/bootstrap.sh
 
 provision:
