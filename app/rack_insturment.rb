@@ -5,8 +5,9 @@ module Rack
         end
 
         def call(env)
-            $statsd.time('hello.rack.request') { 
-                @app.call(env)
+            $statsd.increment('hello.rack.request.count')
+            $statsd.time('hello.rack.request.duration') { 
+                result = @app.call(env)
             }
         end
     end
