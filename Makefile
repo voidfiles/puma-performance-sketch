@@ -33,5 +33,5 @@ ssh:
 	@echo "benchmark: ssh root@$(BENCHMARK_HOST)"
 
 update:
-	ssh root@$(APP_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only'
-	ssh root@$(BENCHMARK_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only'
+	ssh root@$(APP_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only; make provision'
+	ssh root@$(BENCHMARK_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only; make provision'
