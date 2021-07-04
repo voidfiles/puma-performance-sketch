@@ -18,9 +18,9 @@ provision:
 
 setup:
 ifdef $(foo)
-	apt-get install ruby go ruby-bundle
+	apt-get install ruby ruby-dev go ruby-bundle
 endif 
-	bundle
+	cd app && bundle
 	go get -u github.com/tsenart/vegeta
 
 
