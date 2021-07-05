@@ -15,12 +15,15 @@ bootstrap:
 	ssh root@$(BENCHMARK_HOST) 'DD_API_KEY=$(DD_API_KEY) bash -s' < ./scripts/bootstrap.sh
 
 provision:
-	./scripts/provision.sh
+	pipenv run ansible-playbook playbooks/provision.yml
 
 setup:
-	cd app && bundle
-	go get -u github.com/tsenart/vegeta
+	pipenv run ansible-playbook -i inventory playbooks/app_host.yml
 
+# setup:
+# 	cd app && bundle
+# 	go get -u github.com/tsenart/vegeta
+# 	pipenv install
 
 test:
 	env | sort
@@ -33,8 +36,7 @@ ssh:
 	@echo "benchmark: ssh root@$(BENCHMARK_HOST)"
 
 update:
-	ssh root@$(APP_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only; make provision'
-	ssh root@$(BENCHMARK_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only; make provision'
+	pipenv run ansible-playbook -i inventory playbooks/update.yml
 
 install_bpf:
 	bash ./scripts/install_ebpf.sh

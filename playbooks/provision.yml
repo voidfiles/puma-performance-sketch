@@ -1,0 +1,56 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Create ssh key
+      community.digitalocean.digital_ocean_sshkey:
+        name: my_ssh_key
+        ssh_pub_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD7rU/2NK3F7MhvX9bh3f2cYtmnRhq1vrZjnlulJdInp+07EiXix/1bgyZ9gFw4xwW+0cZx5XP2bbLQA0d7Z+whzYJQziktX+PnIK5ifslhefjBK7W6unkPiLH+NfWdyeMf6b9fBUZGBgXOrWGQHmIfs3G2IHcmyEswWHuDcbLXwQV5R9bdj1FKNeS9TNTp9Rkh89tqmcTEuQfqu7y4yQI/FIpr1uYL8DlNe09EnjoUcYIL3SVcqwa4NwmSPGIMlzB8zh486N02HkBVVBE7GKbqVVJh4YcJXWTVjfYDgQ/auPF0+EUFVdJbbDogQ0IYa2OLpk/p6WKX8t5+ga+rWvYNWWsNk4aMy4Unc7bVvBbafKudY+b3dC/D9IBuCpZ2OtojpYYlR8tP33TlzUgDStPAC2Qo4xBokSuaJLihTnePpEpOy3wRnR6Kk/Kg5bMAC/kNrRHzfSVi93svGH1JjB3JI2W8Kj/KNWJvlqcQKJWYVjPf6byiMlwNwQ3A4WB3Cl+biP3ivc/lnuVETmhdnfbBjeFcQR84063lDFo+zAFuUh/n1cCEGpSJuEk6vzTGylUAttr+IVSqmRgbQmDGdYleC0BJeIa5ASvW/cZ/NuVryT+ITOKomP6RXx3OpUX8YbnXmwnOemkrW3nb7xVsjLwOXp/z4e/3ygC72zb3nSgHwQ== voidfiles@gmail.com"
+        state: present
+      register: result
+    - name: Print return information from the previous task
+      ansible.builtin.debug:
+        var: result
+    - name: Create app host
+      community.digitalocean.digital_ocean_droplet:
+        state: present
+        name: app-host
+        unique_name: yes
+        size: s-2vcpu-4gb
+        region: sfo3
+        image: ubuntu-20-10-x64
+        wait_timeout: 500
+        tags:
+          - kind=app
+        ssh_keys:
+          - "{{ result.data.ssh_key.id }}"
+      register: app_host
+
+    - name: Create benchmark_host
+      community.digitalocean.digital_ocean_droplet:
+        state: present
+        name: benchmark-host
+        unique_name: yes
+        size: s-1vcpu-1gb
+        region: sfo3
+        image: ubuntu-20-10-x64
+        tags:
+          - kind=benchmark
+        wait_timeout: 500
+        ssh_keys:
+          - "{{ result.data.ssh_key.id }}"
+      register: benchmark_host
+
+    # - name: Print return information from the previous task
+    #   ansible.builtin.debug:
+    #     var: app_host
+  
+    # - name: Create A record for www
+    #   community.digitalocean.digital_ocean_domain_record:
+    #     state: present
+    #     domain: ffframe.store
+    #     type: A
+    #     name: benchmark
+    #     data: "{{ app_host.data.droplet.ip_address }}"

@@ -1,0 +1,10 @@
+---
+- hosts: app_host
+  remote_user: root
+  tasks:
+    - git:
+        repo: 'https://github.com/voidfiles/puma-performance-sketch.git'
+        dest: /root/puma-performance-sketch
+    - bundler:
+        state: present
+        chdir: /root/puma-performance-sketch/app

@@ -1,0 +1,31 @@
+---
+- hosts: app_host
+  remote_user: root
+  tasks:
+    - name: Install bas packages
+      apt:
+        name:
+          - ruby-dev
+          - ruby
+          - ruby-bundler
+          - golang
+          - nginx
+          - wrk
+          - git
+          - build-essential
+          - bison
+          - cmake
+          - flex
+          - libedit-dev 
+          - libllvm11
+          - llvm-11-dev
+          - libclang-11-dev
+          - python
+          - zlib1g-dev
+          - libelf-dev
+          - libfl-dev
+        update_cache: yes
+    - name: Install bpf tooling
+      script:
+        cmd: ../scripts/install_ebpf.sh
+        chdir: /root/
