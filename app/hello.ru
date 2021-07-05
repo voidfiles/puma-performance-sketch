@@ -1,8 +1,6 @@
-ENV["STATSD_IMPLEMENTATION"] = ENV.fetch("STATSD_IMPLEMENTATION", "statsd")
-ENV["STATSD_ENV"] = ENV.fetch("STATSD_ENV", "production")
-ENV["STATSD_PREFIX"] = ENV.fetch("STATSD_PREFIX", "hello")
+require 'datadog/statsd'
 
-require 'statsd-instrument'
+$statsd = Datadog::Statsd.new('localhost', 8125, :namespace => 'hello')
 
 require_relative './rack_insturment'
 

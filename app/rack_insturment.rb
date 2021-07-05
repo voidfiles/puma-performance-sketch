@@ -5,8 +5,7 @@ module Rack
         end
 
         def call(env)
-            StatsD.increment('rack.request.count')
-            StatsD.measure('rack.request.duration') do 
+            $statsd.time('rack.request') do
                 result = @app.call(env)
             end
         end
