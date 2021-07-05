@@ -35,3 +35,6 @@ ssh:
 update:
 	ssh root@$(APP_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only; make provision'
 	ssh root@$(BENCHMARK_HOST) 'cd projects/puma-performance-sketch; git pull --ff-only; make provision'
+
+install_bpf:
+	bash ./scripts/install_ebpf.sh
