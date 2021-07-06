@@ -124,4 +124,36 @@ Transfer/sec:    221.91KB
 - Gracefully stopping, waiting for requests to finish
 ```
 
-## 
+### Overloaded w/Puma Stats
+
+This one was ran for 5 minutes to soak the app a bit more
+
+```
+./scripts/hello.sh
+Puma starting in single mode...
+* Puma version: 5.3.2 (ruby 2.7.1-p83) ("Sweetnighter")
+*  Min threads: 4
+*  Max threads: 4
+*  Environment: development
+*          PID: 428068
+* Listening on http://0.0.0.0:9292
+Use Ctrl-C to stop
+/usr/bin/ss
+Running 5m test @ http://localhost:9292
+  2 threads and 32 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    42.36ms   57.04ms 400.98ms   83.09%
+    Req/Sec     1.49k   553.04     3.94k    66.18%
+  Latency Distribution
+     50%    6.22ms
+     75%   74.97ms
+     90%  127.62ms
+     99%  222.95ms
+  889037 requests in 5.00m, 65.56MB read
+Requests/sec:   2962.91
+Transfer/sec:    223.73KB
+- Gracefully stopping, waiting for requests to finish
+```
+
+
+

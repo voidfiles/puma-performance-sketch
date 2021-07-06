@@ -7,9 +7,10 @@
         chdir: '/root/puma-performance-sketch/'
         cmd: make benchmark
       environment:
-        RACK_INSTURMENT: "{{ lookup('env', 'RACK_INSTURMENT') }}"
-        WRK_CONCURRENT: "{{ lookup('env', 'WRK_CONCURRENT') }}"
-        PUMA_STATSD: "{{ lookup('env', 'PUMA_STATSD') }}"
+        RACK_INSTURMENT: "{{ lookup('env', 'RACK_INSTURMENT') | default('true', true) }}"
+        WRK_CONCURRENT: "{{ lookup('env', 'WRK_CONCURRENT') | default('4', true)  }}"
+        PUMA_STATSD: "{{ lookup('env', 'PUMA_STATSD') | default('false', true) }}"
+        DURATION: "{{ lookup('env', 'DURATION') | default('30', true)  }}"
 
       register: benchmark
 
@@ -21,4 +22,4 @@
       local_action:
         module: copy
         content: "{{ benchmark.stdout }}"
-        dest: "../wrk_benchmark.{{ ansible_date_time.iso8601_basic }}.txt"
+        dest: "../results/wrk_benchmark.{{ ansible_date_time.iso8601_basic }}.txt"
