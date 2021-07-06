@@ -1,7 +1,7 @@
 #!/bin/bash
 PUMA_THREADS="${PUMA_THREADS:-4}"
 
-/usr/share/bcc/tools/tcplife -L 9292 | awk '{print "hello.tcp.connection.latency:"$9"|ms"}' | nc -w 1 -u localhost 8125 &
+PYTHONUNBUFFERED=x /usr/share/bcc/tools/tcplife -L 9292 -s |  awk -F',' '{print "hello.tcp.connection.latency:"$10"|ms"}' | nc -w 1 -u localhost 8125 &
 PID1=$!
 
 cd app
