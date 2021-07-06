@@ -34,6 +34,9 @@ test:
 benchmark:
 	./scripts/hello.sh
 
+load:
+	./scripts/load.sh
+
 ssh:
 	@echo "app_host: ssh root@$(APP_HOST)"
 	@echo "benchmark: ssh root@$(BENCHMARK_HOST)"
