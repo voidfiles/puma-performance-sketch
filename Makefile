@@ -17,6 +17,18 @@ setup:
 update:
 	pipenv run ansible-playbook -i inventory playbooks/update.yml
 
+wrk_benchmark:
+	RACK_INSTURMENT=false PUMA_STATSD=false WRK_CONCURRENT=4 pipenv run ansible-playbook -i inventory playbooks/wrk_benchmark.yml
+
+wrk_benchmark_insturmented:
+	RACK_INSTURMENT=true PUMA_STATSD=false WRK_CONCURRENT=4 pipenv run ansible-playbook -i inventory playbooks/wrk_benchmark.yml
+
+wrk_benchmark_overload:
+	RACK_INSTURMENT=true PUMA_STATSD=false WRK_CONCURRENT=32 pipenv run ansible-playbook -i inventory playbooks/wrk_benchmark.yml
+
+wrk_benchmark_overload_puma_stats:
+	RACK_INSTURMENT=true PUMA_STATSD=true WRK_CONCURRENT=32 pipenv run ansible-playbook -i inventory playbooks/wrk_benchmark.yml
+
 run:
 	./scripts/run.sh
 

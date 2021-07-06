@@ -8,7 +8,7 @@ PUMA_THREADS="${PUMA_THREADS:-4}"
 WRK_CONCURRENT="${WRK_CONCURRENT:-4}"
 DURATION="${DURATION:-30}"
 
-bundle exec puma -t ${PUMA_THREADS} hello.ru &
+bundle exec puma -C puma_config.rb hello.ru &
 PID1=$!
 
 sleep 10

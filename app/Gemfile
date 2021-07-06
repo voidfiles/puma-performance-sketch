@@ -12,3 +12,5 @@ gem "puma", "~> 5.3"
 
 
 gem "dogstatsd-ruby", "~> 5.2"
+
+gem "puma-plugin-statsd", "~> 1.2"
