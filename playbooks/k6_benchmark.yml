@@ -2,6 +2,9 @@
 - hosts: app_host
   remote_user: root
   tasks:
+    - name: Setting host facts using key=value pairs, this format can only create strings or booleans
+      set_fact:
+        app_host_ip: "{{ansible_default_ipv4.address}}"
     - name: Run Server For Remote Benchmark
       shell:
         chdir: '/root/puma-performance-sketch/'
@@ -12,11 +15,25 @@
         PUMA_STATSD: "{{ lookup('env', 'PUMA_STATSD') | default('false', true) }}"
         PUMA_QUEUE_REQUESTS: "{{ lookup('env', 'PUMA_QUEUE_REQUESTS') | default('true', true) }}"
         DURATION: "{{ lookup('env', 'DURATION') | default('30', true)  }}"
-
       register: benchmark
       async: 1000
       poll: 0
 
+- hosts: benchmark_host
+  remote_user: root
+  tasks:
+    - name: Run k6 test
+      shell:
+        chdir: '/root/puma-performance-sketch/'
+        cmd: make load
+      environment:
+        VIRTUAL_USERS: "{{ lookup('env', 'VIRTUAL_USERS') | default('2', true) }}"
+        DURATION: "{{ lookup('env', 'DURATION') | default('5m', true)  }}"
+        APP_HOST_IP: "{{ app_host_ip }}"
+
+- hosts: app_host
+  remote_user: root
+  tasks:
     - name: Show benchmark output
       debug:
         msg: "{{ benchmark }}"
