@@ -20,6 +20,9 @@ provision:
 setup:
 	pipenv run ansible-playbook -i inventory playbooks/app_host.yml playbooks/benchmark_host.yml
 
+run:
+	./scripts/run.sh
+
 # setup:
 # 	cd app && bundle
 # 	go get -u github.com/tsenart/vegeta
