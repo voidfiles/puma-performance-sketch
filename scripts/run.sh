@@ -1,7 +1,7 @@
 #!/bin/bash
 PUMA_THREADS="${PUMA_THREADS:-4}"
 
-function slownc(){ while read x; echo "$x" | nc -w 1 -u localhost 8125; done; }
+function slownc(){ while read x; do echo "$x" | nc -w 1 -u localhost 8125; done; }
 
 PYTHONUNBUFFERED=x /usr/share/bcc/tools/tcplife -L 9292 -s |  awk -F',' '{print "hello.tcp.connection.latency:"int($10)"|ms"}' | slownc &
 PID1=$!
