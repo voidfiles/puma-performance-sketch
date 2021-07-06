@@ -1,9 +1,9 @@
 #!/bin/bash
 PUMA_THREADS="${PUMA_THREADS:-4}"
 
-function slowcat(){ while read; do sleep .05; echo "$REPLY"; done; }
+function slownc(){ while read x; echo "$x" | nc -w 1 -u localhost 8125; done; }
 
-PYTHONUNBUFFERED=x /usr/share/bcc/tools/tcplife -L 9292 -s |  awk -F',' '{print "hello.tcp.connection.latency:"int($10)"|ms"}' | slowcat | nc -w 1 -u localhost 8125 &
+PYTHONUNBUFFERED=x /usr/share/bcc/tools/tcplife -L 9292 -s |  awk -F',' '{print "hello.tcp.connection.latency:"int($10)"|ms"}' | slownc &
 PID1=$!
 
 cd app
