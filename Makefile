@@ -38,6 +38,7 @@ run:
 kill:
 	$(shell kill `cat puma.pid`)
 	$(shell kill `cat stat.pid`)
+	rm -fR puma.pid stat.pid
 
 benchmark:
 	./scripts/hello.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -fR puma.pd stat.pid
+rm -fR ../puma.pd ../stat.pid
 
 PUMA_THREADS="${PUMA_THREADS:-4}"
 
@@ -19,8 +19,8 @@ function finish {
     kill $PID2
 }
 
-cat $PID1 > puma.pid
-cat $PID2 > stat.pid
+echo $PID1 > ../puma.pid
+echo $PID2 > ../stat.pid
 
 trap finish EXIT
 
