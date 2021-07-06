@@ -1,0 +1,31 @@
+---
+- hosts: benchmark_host
+  remote_user: root
+  tasks:
+    - name: Add an apt key by id from a keyserver
+      apt_key:
+        keyserver: hkp://keyserver.ubuntu.com:80
+        id: C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+    - name: Add repository
+      apt_repository:
+        repo: deb https://dl.k6.io/deb stable main
+        state: present
+    - name: Install base packages
+      apt:
+        name:
+          - golang
+          - wrk
+          - git
+          - python
+          - ca-certificates
+          - gnupg2
+          - k6
+        update_cache: yes
+    - name: Install DataDog Agent
+      shell:
+        cmd: bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+        creates: /usr/bin/datadog-agent
+      environment:
+        DD_AGENT_MAJOR_VERSION: 7
+        DD_API_KEY: "{{ lookup('env', 'DD_API_KEY')}}"
+        DD_SITE: "datadoghq.com"

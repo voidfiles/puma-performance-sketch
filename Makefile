@@ -18,7 +18,7 @@ provision:
 	pipenv run ansible-playbook playbooks/provision.yml
 
 setup:
-	pipenv run ansible-playbook -i inventory playbooks/app_host.yml
+	pipenv run ansible-playbook -i inventory playbooks/app_host.yml playbooks/benchmark_host.yml
 
 # setup:
 # 	cd app && bundle

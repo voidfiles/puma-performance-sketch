@@ -24,8 +24,21 @@
           - zlib1g-dev
           - libelf-dev
           - libfl-dev
+          - systemtap
+          - ca-certificates
+          - gnupg2
+          - curl
         update_cache: yes
+    - name: Install DataDog Agent
+      shell:
+        cmd: bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+        creates: /usr/bin/datadog-agent
+      environment:
+        DD_AGENT_MAJOR_VERSION: 7
+        DD_API_KEY: "{{ lookup('env', 'DD_API_KEY')}}"
+        DD_SITE: "datadoghq.com"
     - name: Install bpf tooling
       script:
         cmd: ../scripts/install_ebpf.sh
+        creates: /usr/share/bcc/tools/tcplife
         chdir: /root/

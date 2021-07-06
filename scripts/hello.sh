@@ -11,7 +11,7 @@ PID1=$!
 sleep 5
 wrk -c ${WRK_CONCURRENT} -d 30 --latency http://localhost:9292 &
 PID2=$!
-while [kill -s 0 $PID2]; do
+while kill -s 0 $PID2; do
     ss -plnt -H sport = :9292 | awk '{print "hello.accept.queue:"$2"|g"}' | nc -w 1 -u localhost 8125
 done
 
