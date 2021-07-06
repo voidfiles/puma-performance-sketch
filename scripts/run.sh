@@ -9,7 +9,7 @@ cd app
 bundle exec puma -t ${PUMA_THREADS} hello.ru & 
 PID2=$!
 
-func finish {
+function finish {
     kill $PID1
     kill $PID2
 }
