@@ -29,8 +29,15 @@ wrk_benchmark_overload:
 wrk_benchmark_overload_puma_stats:
 	PUMA_STATSD=true WRK_CONCURRENT=32 DURATION=300 pipenv run ansible-playbook -i inventory playbooks/wrk_benchmark.yml
 
+k6_benchmark:
+	PUMA_STATSD=true pipenv run ansible-playbook -i inventory playbooks/k6_benchmark.yml
+
 run:
 	./scripts/run.sh
+
+kill:
+	$(shell kill `cat puma.pid`)
+	$(shell kill `cat stat.pid`)
 
 benchmark:
 	./scripts/hello.sh

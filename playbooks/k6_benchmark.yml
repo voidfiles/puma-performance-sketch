@@ -2,10 +2,10 @@
 - hosts: app_host
   remote_user: root
   tasks:
-    - name: Run Local Benchmark
+    - name: Run Server For Remote Benchmark
       shell:
         chdir: '/root/puma-performance-sketch/'
-        cmd: make benchmark
+        cmd: make run
       environment:
         RACK_INSTURMENT: "{{ lookup('env', 'RACK_INSTURMENT') | default('true', true) }}"
         WRK_CONCURRENT: "{{ lookup('env', 'WRK_CONCURRENT') | default('4', true)  }}"
@@ -14,13 +14,14 @@
         DURATION: "{{ lookup('env', 'DURATION') | default('30', true)  }}"
 
       register: benchmark
+      async: 1000
+      poll: 0
 
     - name: Show benchmark output
       debug:
-        msg: "{{ benchmark.stdout }}"
+        msg: "{{ benchmark }}"
 
-    - name: Save output
-      local_action:
-        module: copy
-        content: "{{ benchmark.stdout }}"
-        dest: "../results/wrk_benchmark.{{ ansible_date_time.iso8601_basic }}.txt"
+    - name: Kill Server
+      shell:
+        chdir: '/root/puma-performance-sketch/'
+        cmd: make kill

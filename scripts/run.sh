@@ -1,4 +1,7 @@
 #!/bin/bash
+
+rm -fR puma.pd stat.pid
+
 PUMA_THREADS="${PUMA_THREADS:-4}"
 
 function slownc(){ while read x; do echo "$x" | nc -w 1 -u localhost 8125; done; }
@@ -15,6 +18,9 @@ function finish {
     kill $PID1
     kill $PID2
 }
+
+cat $PID1 > puma.pid
+cat $PID2 > stat.pid
 
 trap finish EXIT
 
