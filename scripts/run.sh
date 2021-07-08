@@ -11,7 +11,7 @@ PID1=$!
 
 cd app
 
-bundle exec puma -t ${PUMA_THREADS} hello.ru & 
+bundle exec puma -C puma_config.rb -t ${PUMA_THREADS} hello.ru &
 PID2=$!
 
 function finish {
